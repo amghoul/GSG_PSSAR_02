@@ -27,3 +27,27 @@ df_json['citations'] = pd.to_numeric(df_json['citations'])
 cp2 = df_json.loc[df_json['citations'].idxmax(), 'researcher_id']
 #################
 print(cp2)
+###############
+df_excel = pd.read_excel('data/funding.xlsx')
+print(df_excel.head())
+print(df_excel)
+print(df_excel.shape)
+print(df_excel.head())
+print(df_excel.dtypes)
+print(df_excel.isnull().sum())
+print(df_excel.duplicated().sum())
+print(df_excel['amount_cad'].describe())
+print(df_excel.columns)
+
+df_clean = df_excel.dropna(subset=['amount_cad'])
+#df_clean =df_clean[df_clean['amount_cad']>0] 
+df_clean = pd.to_numeric(df_clean['amount_cad'], errors='coerce')
+df_clean = df_excel[df_excel['amount_cad'] > 0]
+
+# 3. Calculate the sum of the positive numbers
+positive_sum = df_clean['amount_cad'].sum()
+cp3 = positive_sum
+print(f"The sum of positive numbers is: {cp3}")
+###
+hid_message = "cp1: "+ str(cp1) + " cp2: " + str(cp2) + " cp3: " + str(cp3)[0:4]
+print(hid_message)
