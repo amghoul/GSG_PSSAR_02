@@ -79,7 +79,11 @@ In this join we have many null values becasue there are some research_id not exi
 # The answer is The researcher with the most citations is: Claire Davidson, and his research_id is: R001
 max_citation_tuple = merge_inner.groupby(['researcher_id','first_name','last_name'])['citations'].sum().idxmax()
 print(f"The researcher with the most citations is: {max_citation_tuple[1]} {max_citation_tuple[2]}, and his research_id is: {max_citation_tuple[0]}")
+
 # 2 Which field received the most total funding?
+filed_max_funding = merge_inner.groupby('field')['amount_cad'].sum().idxmax()
+print(f"The field received the most total funding is: {filed_max_funding}")
+
 # 3 Who joined earliest and is still active?
 #print(merge_inner.columns)
 
