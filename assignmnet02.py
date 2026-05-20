@@ -39,6 +39,15 @@ def clean_funding(df):
     df_clean = df_clean[df_clean['amount_cad'] > 0]
     return df_clean
 
+# merge three dataframes according to the type value
+def merge_func(df1, df2, df3, type):
+    merged_df1_df2= pd.merge(df1, df2, on='researcher_id', how=type )
+    merged_all = pd.merge(merged_df1_df2, df3, on='researcher_id', how=type )
+    print(f"######## The merged three files using {type} join ######### \n")
+    print(merged_all.head())
+    get_file_stats(merged_all)
+    return merged_all
+
 ############### Loading files and get stats about each one#############
 df_reserchers= load_file(file_csv)
 get_file_stats(df_reserchers)
@@ -51,4 +60,20 @@ get_file_stats(df_funding)
 ################# Clean funding file ##########
 df_funding_cleaned = clean_funding(df_funding)
 print(get_file_stats(df_funding_cleaned))
+
+########## Merging the three dataframes using inner merge
+merge_inner = merge_func(df_publications, df_funding_cleaned, df_reserchers, "inner")
+""" In the inner join we got 47 rows and 23 columns. 
+The inner join keeps all rows that matches "researcher_id" in the three dataframes 
+Here, we have no missed values
+"""
+merge_left = merge_func(df_publications, df_funding_cleaned, df_reserchers, "left")
+"""In the left join we get 77 rows and 23 columns, 
+we keep all rows in the publications dataframe in addition to the matached rows 
+in other two datafremes where "research_id" matched
+In this join we have many null values becasue there are some research_id not exist in other dataframes.
+"""
+
+
+
 
