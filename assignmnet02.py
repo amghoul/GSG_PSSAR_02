@@ -83,10 +83,19 @@ print(f"The researcher with the most citations is: {max_citation_tuple[1]} {max_
 # 2 Which field received the most total funding?
 # The answer is The field received the most total funding is: Machine Learning
 filed_max_funding = merge_inner.groupby('field')['amount_cad'].sum().idxmax()
-print(f"The field received the most total funding is: {filed_max_funding}")
+print(f"\nThe field received the most total funding is: {filed_max_funding}")
 
 # 3 Who joined earliest and is still active?
-#print(merge_inner.columns)
+# The answer is:
+#first_name  last_name  researcher_id
+#Claire      Davidson   R001             2008
+#Jiyeon      Park       R031             2008
+#Li          Chen       R016             2008
+active_groupby= merge_inner[merge_inner['is_active']==True].groupby(['first_name','last_name','researcher_id'])['joined_year'].min()
+print(f"\n The answer of Who joined earliest and is still active?")
+print(active_groupby[active_groupby == active_groupby.min()])
+
+
 
 
 
