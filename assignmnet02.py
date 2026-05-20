@@ -48,6 +48,7 @@ def merge_func(df1, df2, df3, type):
     get_file_stats(merged_all)
     return merged_all
 
+
 ############### Loading files and get stats about each one#############
 df_reserchers= load_file(file_csv)
 get_file_stats(df_reserchers)
@@ -73,6 +74,16 @@ we keep all rows in the publications dataframe in addition to the matached rows
 in other two datafremes where "research_id" matched
 In this join we have many null values becasue there are some research_id not exist in other dataframes.
 """
+
+# 1 Which researcher has the highest total citations? 
+# The answer is The researcher with the most citations is: Claire Davidson, and his research_id is: R001
+max_citation_tuple = merge_inner.groupby(['researcher_id','first_name','last_name'])['citations'].sum().idxmax()
+print(f"The researcher with the most citations is: {max_citation_tuple[1]} {max_citation_tuple[2]}, and his research_id is: {max_citation_tuple[0]}")
+# 2 Which field received the most total funding?
+# 3 Who joined earliest and is still active?
+#print(merge_inner.columns)
+
+
 
 
 
