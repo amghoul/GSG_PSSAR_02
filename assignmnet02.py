@@ -31,7 +31,15 @@ def get_file_stats(df):
             print(attr().sum())
         else:
             print(attr)
-##################################
+
+# Clean funding file
+def clean_funding(df):
+    df_clean = df.dropna(subset=['amount_cad', 'status']).copy()
+    df_clean['amount_cad'] = pd.to_numeric(df_clean['amount_cad'], errors='coerce')
+    df_clean = df_clean[df_clean['amount_cad'] > 0]
+    return df_clean
+
+############### Loading files and get stats about each one#############
 df_reserchers= load_file(file_csv)
 get_file_stats(df_reserchers)
 
@@ -40,4 +48,7 @@ get_file_stats(df_publications)
 
 df_funding = load_file(file_excel)
 get_file_stats(df_funding)
-################################
+################# Clean funding file ##########
+df_funding_cleaned = clean_funding(df_funding)
+print(get_file_stats(df_funding_cleaned))
+
