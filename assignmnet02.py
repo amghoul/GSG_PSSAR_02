@@ -95,8 +95,12 @@ active_groupby= merge_inner[merge_inner['is_active']==True].groupby(['first_name
 print(f"\n The answer of Who joined earliest and is still active?")
 print(active_groupby[active_groupby == active_groupby.min()])
 
-
-
+#################### Saving the merged and cleaned datframe to a csv file
+def save_df_csv(df, file_name):
+    df.to_csv(f"output/{file_name}.csv", index=False)
+    print(f"The file: {file_name}.csv is saved successfully!")
+    
+save_df_csv(merge_inner,"clean_research_data")
 
 
 
